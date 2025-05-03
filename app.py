@@ -7,6 +7,7 @@ from ui.LoginUI import LoginUI
 from ui.RegisterUI import RegisterUI
 from ui.SettingsUI import SettingUI
 from ui.RedirectUI import RedirectUI
+from ui.MenuUI import MenuUI
 def switch_ui(current_ui, next_ui, redir):
     """
     Switches the current UI to the next UI.
@@ -40,15 +41,18 @@ def main():
     home_ui = HomeUI()
     login_ui = LoginUI()
     register_ui = RegisterUI()
+    menu_ui = MenuUI()
     redirect_ui = RedirectUI()
     settings_ui = SettingUI()
+    
     home_ui.login_signal.connect(lambda: switch_ui(home_ui, login_ui, None))
     home_ui.register_signal.connect(lambda: switch_ui(home_ui, register_ui, None))
     home_ui.setting_signal.connect(lambda: switch_ui(home_ui, settings_ui, None))
-    login_ui.login_signal.connect(lambda: switch_ui(login_ui, home_ui, redirect_ui))
+    login_ui.login_signal.connect(lambda: switch_ui(login_ui, menu_ui, redirect_ui))
     login_ui.register_signal.connect(lambda: switch_ui(login_ui, register_ui, redirect_ui))
     register_ui.register_signal.connect(lambda: switch_ui(register_ui, login_ui, redirect_ui))
     settings_ui.back_home.connect(lambda: switch_ui(settings_ui, home_ui, None))
+    menu_ui.backtohome_signal.connect(lambda: switch_ui(menu_ui, home_ui, None))
     
     home_ui.show()
     sys.exit(app.exec_())

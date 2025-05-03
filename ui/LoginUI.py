@@ -41,7 +41,6 @@ class LoginUI(FluentWindow ,LoginUtils):
         main_layout.addWidget(self.email_input)
         main_layout.addWidget(self.password_input)
         login_button = PushButton("Login", self)
-        login_button.clicked.connect(self.login_signal.emit)
         login_button.clicked.connect(self.login_click)
         main_layout.addWidget(login_button)
         register_button = PushButton("Register", self)
@@ -57,5 +56,7 @@ class LoginUI(FluentWindow ,LoginUtils):
         username = self.username_input.text()
         email = self.email_input.text()
         password = self.password_input.text()
-        self._on_login_clicked(username, email, password)
+        val = self._on_login_clicked(username, email, password)
+        if val:
+            self.login_signal.emit()
         

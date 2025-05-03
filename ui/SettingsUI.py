@@ -9,6 +9,8 @@ from qfluentwidgets import Theme, setTheme
 
 
 class SettingUI(FluentWindow):
+    """FluentWindow üzerinde çalışacak tema ve dil ayarları arayüzü."""
+
     themeChanged = pyqtSignal(str)
     languageChanged = pyqtSignal(str)
     back_home = pyqtSignal()
@@ -20,10 +22,6 @@ class SettingUI(FluentWindow):
         self.initUI()
 
     def initUI(self):
-        """
-        User Interface for settings.
-        :return: None
-        """
         current_theme, current_lang = SettingUtils.loadSettings()
         self.centralWidget = QFrame(self)
         layout = QVBoxLayout(self.centralWidget)
@@ -64,11 +62,6 @@ class SettingUI(FluentWindow):
         self.centralWidget.setObjectName("settingsInterface")
         self.addSubInterface(self.centralWidget, FIF.SETTING, "Settings")
     def onThemeChanged(self, theme_text):
-        """
-        onThemeChanged this method is called when the theme is changed.
-        :param theme_text: The text of the selected theme.
-        :return: None
-        """
         lang_code = self.langCombo.currentData()
         SettingUtils.saveSettings(theme_text, lang_code)
 
@@ -82,11 +75,7 @@ class SettingUI(FluentWindow):
         self.themeChanged.emit(theme_text)
 
     def onLanguageChanged(self, index):
-        """
-        onLanguageChanged this method is called when the language is changed.
-        :param index: The index of the selected language.
-        :return: None
-        """
+        """Dil değiştiğinde ayarları kaydeder ve sinyal yayar."""
         lang_code = self.langCombo.itemData(index)
         current_theme = self.themeCombo.currentText()
         SettingUtils.saveSettings(current_theme, lang_code)

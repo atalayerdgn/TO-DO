@@ -1,9 +1,10 @@
+# SettingUtils.py - Ayarları kaydetme ve okuma sınıfı
 from PyQt5.QtCore import QSettings
 
 class SettingUtils:
     @staticmethod
     def saveSettings(theme: str, language: str):
-        settings = QSettings("MyCompany", "MyApp")
+        settings = QSettings("MyCompany", "MyApp") 
         settings.setValue("theme", theme)
         settings.setValue("language", language)
 

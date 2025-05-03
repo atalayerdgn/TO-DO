@@ -20,7 +20,6 @@ class LoginUtils(QWidget):
         :param username: The username of the user.
         :param email: The email address of the user.
         :param password: The password of the user.
-        :return: None
         """
         if not self._verify_credentials(username,email,password):
             InfoBar.error(
@@ -49,7 +48,7 @@ class LoginUtils(QWidget):
                 parent=self,
                 position=InfoBarPosition.TOP
             )
-            self._prompt_verification_code()
+            return self._prompt_verification_code()
         else:
             InfoBar.error(
                 title="Error",
@@ -135,3 +134,4 @@ class LoginUtils(QWidget):
 
         submit_button.clicked.connect(verify)
         dialog.exec_()
+        return dialog.result() == QDialog.Accepted
