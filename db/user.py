@@ -5,7 +5,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "..", "data")
 DB_PATH = os.path.abspath(os.path.join(DATA_DIR, "users.db"))
-
+DB_PATH_TASKS = os.path.abspath(os.path.join(DATA_DIR, "tasks.db"))
 def add_user(username, email, password):
     """
     Adds a new user to the database with a hashed password.

@@ -1,9 +1,7 @@
 from qfluentwidgets import FluentWindow, FluentIcon as FIF, SubtitleLabel, LineEdit, PushButton, PasswordLineEdit, pyqtSignal
 from PyQt5.QtWidgets import QFrame, QVBoxLayout, QHBoxLayout
-import os
 from PyQt5.QtCore import Qt
 from utils.LoginUtils import LoginUtils
-
 class LoginUI(FluentWindow ,LoginUtils):
     """
     This class represents the login interface of the application.
@@ -56,7 +54,15 @@ class LoginUI(FluentWindow ,LoginUtils):
         username = self.username_input.text()
         email = self.email_input.text()
         password = self.password_input.text()
+        global current_user
+        current_user = username
         val = self._on_login_clicked(username, email, password)
         if val:
             self.login_signal.emit()
         
+def get_current_user():
+    """
+    Returns the current user.
+    :return: str
+    """
+    return current_user

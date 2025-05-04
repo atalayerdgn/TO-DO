@@ -1,6 +1,6 @@
 # ✅ To Do Application
 
-A simple yet powerful task management application. Easily manage your daily tasks with a clean and user-friendly interface.
+A simple yet task management application. Easily manage your daily tasks with a clean and user-friendly interface.
 
 ---
 
@@ -16,7 +16,6 @@ A simple yet powerful task management application. Easily manage your daily task
 
   2 Factor Authentication With SMTP for security.
 
-- **Coming Soon...**
 
 ---
 
@@ -25,6 +24,6 @@ A simple yet powerful task management application. Easily manage your daily task
 1. Clone the repository:
    ```bash
    git@github.com:atalayerdgn/TO-DO.git
-   cd TO-DO/srcs
+   pip install "PyQt-Fluent-Widgets[full]" -i https://pypi.org/simple/
    pip install -r requirements.txt
    python app.py

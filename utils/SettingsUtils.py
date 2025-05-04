@@ -1,4 +1,3 @@
-# SettingUtils.py - Ayarları kaydetme ve okuma sınıfı
 from PyQt5.QtCore import QSettings
 
 class SettingUtils:

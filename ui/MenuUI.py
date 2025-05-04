@@ -4,28 +4,33 @@ from qfluentwidgets import (
 )
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSpacerItem, QSizePolicy
 from PyQt5.QtCore import Qt, pyqtSignal
-
+from db.tasks import add_task, delete_task_db
+from ui.LoginUI import get_current_user
 class MenuUI(FluentWindow):
     backtohome_signal = pyqtSignal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Task Manager")
-        self.resize(800, 600)
-
+        self.resize(1200, 800)
         self.tasks = []
-
         self.init_ui()
         self.setup_connections()
 
     def init_ui(self):
+        """
+        Initializes the user interface of the task manager window.
+        It creates a central widget with a vertical layout, adds a title label,
+        and sets up input fields for task title, description, priority, and category.
+        It also includes buttons for adding tasks and logging out.
+        """
         central_widget = QWidget(self)
         layout = QVBoxLayout(central_widget)
         layout.setAlignment(Qt.AlignTop)
         layout.setContentsMargins(60, 40, 60, 40)
         layout.setSpacing(20)
         self.title = TitleLabel("📝 Manage Your Tasks")
-        self.subtitle = SubtitleLabel("Add, view and organize your tasks efficiently")
+        self.subtitle = SubtitleLabel("Tasks")
         self.task_input = LineEdit(self)
         self.task_input.setPlaceholderText("Task title")
         self.desc_input = TextEdit(self)
@@ -62,27 +67,58 @@ class MenuUI(FluentWindow):
         self.addSubInterface(central_widget, FIF.MENU, "Task Manager")
 
     def setup_connections(self):
+        """
+        Sets up the signal-slot connections for the buttons.
+        The add button connects to the add_task method,
+        """
         self.add_btn.clicked.connect(self.add_task)
         self.logout_btn.clicked.connect(self.backtohome_signal.emit)
 
     def add_task(self):
+        current_user = get_current_user()
         title = self.task_input.text().strip()
         if not title:
             InfoBar.error("Error", "Task title cannot be empty!", self)
             return
-
         description = self.desc_input.toPlainText().strip()
         priority = self.priority_combo.currentText()
         category = self.category_combo.currentText()
-
+        priority_color = {
+            "High": "#ffcccc",    
+            "Medium": "#cce5ff",  
+            "Low": "#e0e0e0"      
+        }.get(priority, "#f1f1f1")
+    
+        task_widget = QWidget(self)
+        task_layout = QHBoxLayout(task_widget)
+        task_layout.setContentsMargins(0, 0, 0, 0)
+    
         task_text = f"✅ {title} | {priority} | {category}\n{description}"
         task_label = QLabel(task_text, self)
         task_label.setWordWrap(True)
-        task_label.setStyleSheet("background: #f1f1f1; padding: 10px; border-radius: 6px;")
-        self.task_layout.addWidget(task_label)
-
-        self.tasks.append(task_label)
-
+        task_label.setStyleSheet(f"""
+            background-color: {priority_color};
+            padding: 10px;
+            border-radius: 6px;
+        """)
+    
+        delete_btn = PushButton("🗑️", self)
+        delete_btn.setFixedSize(32, 32)
+        delete_btn.setToolTip("Delete Task")
+        delete_btn.setStyleSheet("background-color: transparent;")
+    
+        def delete_task():
+            self.task_layout.removeWidget(task_widget)
+            task_widget.deleteLater()
+            self.tasks.remove(task_widget)
+            delete_task_db(username=current_user, task=description)
+        delete_btn.clicked.connect(delete_task)
+    
+        task_layout.addWidget(task_label)
+        task_layout.addWidget(delete_btn)
+        self.task_layout.addWidget(task_widget)
+        self.tasks.append(task_widget)
+        add_task(current_user, description)
         self.task_input.clear()
         self.desc_input.clear()
         InfoBar.success("Success", "Task added successfully!", self)

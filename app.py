@@ -1,13 +1,14 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QTimer
-from db.initdb import init_db
+from db.initdb import init_db, init_tasksdb
 from ui.HomeUI import HomeUI
 from ui.LoginUI import LoginUI
 from ui.RegisterUI import RegisterUI
 from ui.SettingsUI import SettingUI
 from ui.RedirectUI import RedirectUI
 from ui.MenuUI import MenuUI
+
 def switch_ui(current_ui, next_ui, redir):
     """
     Switches the current UI to the next UI.
@@ -38,6 +39,7 @@ def hide_redirect_and_show_next(redir, next_ui):
 def main():
     app = QApplication(sys.argv)
     init_db()
+    init_tasksdb()
     home_ui = HomeUI()
     login_ui = LoginUI()
     register_ui = RegisterUI()
@@ -56,6 +58,8 @@ def main():
     
     home_ui.show()
     sys.exit(app.exec_())
+
+
 if __name__ == "__main__":
     main()
     

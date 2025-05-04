@@ -1,5 +1,5 @@
 from qfluentwidgets import FluentWindow, FluentIcon as FIF, SubtitleLabel, LineEdit, PushButton, PasswordLineEdit, pyqtSignal
-from PyQt5.QtWidgets import QFrame, QVBoxLayout, QHBoxLayout, QWidget
+from PyQt5.QtWidgets import QVBoxLayout, QWidget
 import os
 from PyQt5.QtCore import Qt
 from utils.RegisterUtils import RegisterUtils
