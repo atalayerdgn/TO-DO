@@ -253,10 +253,10 @@ class MenuUI(FluentWindow):
             
         is_important = self.important_check.isChecked()
         priority_color = {
-            "High": "#ffcccc",    
-            "Medium": "#cce5ff",  
-            "Low": "#e0e0e0"      
-        }.get(priority, "#f1f1f1")
+            "High": "#ef5350",    
+            "Medium": "#ffb74d",  
+            "Low": "#42a5f5"      
+        }.get(priority, "#9e9e9e")
         task_card = CardWidget(self)
         task_layout = QVBoxLayout(task_card)
         task_layout.setContentsMargins(10, 10, 10, 10)
@@ -325,7 +325,7 @@ class MenuUI(FluentWindow):
         
         def complete_task():
             status_icon.setIcon(FIF.COMPLETED)
-            task_card.setStyleSheet("background-color: #e6ffe6;")
+            task_card.setStyleSheet("background-color: #2e7d32;")
             
             try:
                 pass
