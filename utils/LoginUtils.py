@@ -74,7 +74,7 @@ class LoginUtils(QWidget):
             smtp_server = "smtp.gmail.com"
             smtp_port = 587
             sender_email = "atalayerdgnn@gmail.com"
-            sender_password = "fect dqoi vibi nfsn"
+            sender_password = ""
             subject = "Giriş Doğrulama Kodunuz"
             body = f"Giriş işleminizi tamamlamak için doğrulama kodunuz: {code}"
 
